@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace H6_API.Infrastructure.Data
 {
-    internal class WatchMateDbContext : DbContext
+    public class WatchMateDbContext : DbContext
     {
         public WatchMateDbContext(DbContextOptions<WatchMateDbContext> options) : base(options)
         {
