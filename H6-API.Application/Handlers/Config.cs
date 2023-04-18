@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,39 +10,31 @@ namespace H6_API.Application.Handlers
 {
     public static class Config
     {
-        public static IEnumerable<ApiResource> GetApiResources()
-        {
-            return new List<ApiResource>
-        {
-            new ApiResource("myapi", "My API")
-        };
-        }
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new List<ApiScope>
+            {
+            new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
+            };
 
-        public static IEnumerable<IdentityResource> GetIdentityResources()
-        {
-            return new List<IdentityResource>
-        {
-            new IdentityResources.OpenId(),
-            new IdentityResources.Profile(),
-            new IdentityResources.Email()
-        };
-        }
-
-        public static IEnumerable<Client> GetClients()
-        {
-            return new List<Client>
-        {
+        public static IEnumerable<Client> Clients =>
+            new List<Client>
+            {
             new Client
             {
-                ClientId = "myclient",
-                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                ClientId = "website",
+
+                // no interactive user, use the clientid/secret for authentication
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                // secret for authentication
                 ClientSecrets =
                 {
-                    new Secret("mysecret".Sha256())
+                    new Secret("secret".Sha256())
                 },
-                AllowedScopes = { "myapi" }
+
+                // scopes that client has access to
+                AllowedScopes = { IdentityServerConstants.LocalApi.ScopeName }
             }
-        };
-        }
+            };
     }
 }

@@ -1,10 +1,15 @@
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace H6_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //[Route("localApi")]
+    [Authorize(LocalApi.PolicyName)]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -20,15 +25,16 @@ namespace H6_API.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public async void Get()
+        public async Task<IActionResult> Get()
         {
             var client = new HttpClient();
-            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:44358");
+            DiscoveryDocumentResponse disco = await client.GetDiscoveryDocumentAsync("http://localhost:5001");
             if (disco.IsError)
             {
                 Console.WriteLine(disco.Error);
-                return;
+                return BadRequest(disco.Json);
             }
+            return Ok(disco.Json);
         }
     }
 }
