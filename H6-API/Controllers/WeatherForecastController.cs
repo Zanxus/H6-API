@@ -1,3 +1,4 @@
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc;
 
 namespace H6_API.Controllers
@@ -19,15 +20,15 @@ namespace H6_API.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public async void Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var client = new HttpClient();
+            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:44358");
+            if (disco.IsError)
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                Console.WriteLine(disco.Error);
+                return;
+            }
         }
     }
 }
