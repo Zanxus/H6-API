@@ -10,21 +10,10 @@ namespace H6_API.Controllers
     [Route("[controller]")]
     //[Route("localApi")]
     [Authorize(LocalApi.PolicyName)]
-    public class WeatherForecastController : ControllerBase
+    public class DiscoveryDocumentController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet(Name = "GetDiscoveryDocument")]
         public async Task<IActionResult> Get()
         {
             var client = new HttpClient();

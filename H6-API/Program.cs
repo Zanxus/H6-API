@@ -1,10 +1,9 @@
-using H6_API.Application.Handlers;
 using H6_API.Domain.Entites;
 using H6_API.Infrastructure.Data;
+using H6_API.Presentation.ApplicationConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Duende.IdentityServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +20,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddIdentityServer()
-    .AddInMemoryApiScopes(Config.ApiScopes)
-    .AddInMemoryClients(Config.Clients)
+    .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
+    .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
+    .AddInMemoryClients(IdentityServerConfig.Clients)
+    .AddAspNetIdentity<ApplicationUser>()
     .AddDeveloperSigningCredential();
 
 builder.Services.AddAuthentication("Bearer")
