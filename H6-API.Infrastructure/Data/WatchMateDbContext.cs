@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using H6_API.Domain.Entites;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace H6_API.Infrastructure.Data
 {
-    public class WatchMateDbContext : DbContext
+    public class WatchMateDbContext : IdentityDbContext<ApplicationUser>
     {
         public WatchMateDbContext(DbContextOptions<WatchMateDbContext> options) : base(options)
         {

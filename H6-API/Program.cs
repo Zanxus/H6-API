@@ -1,5 +1,9 @@
+using H6_API.Domain.Entites;
 using H6_API.Infrastructure.Data;
+using H6_API.Presentation.ApplicationConfig;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,31 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
+builder.Services.AddLocalApiAuthentication();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<WatchMateDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddIdentityServer()
+    .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
+    .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
+    .AddInMemoryClients(IdentityServerConfig.Clients)
+    .AddAspNetIdentity<ApplicationUser>()
+    .AddDeveloperSigningCredential();
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://localhost:5001";
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false
+        };
+
+        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+
+    });
 
 if (builder.Environment.IsDevelopment())
 {
@@ -32,15 +61,17 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseCors("Dev");
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseRouting();
+app.UseIdentityServer();
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapControllers();
 
 app.Run();

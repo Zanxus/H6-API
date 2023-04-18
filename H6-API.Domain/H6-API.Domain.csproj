@@ -9,7 +9,12 @@
 
   <ItemGroup>
     <Folder Include="DTO\" />
-    <Folder Include="Entites\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Duende.IdentityServer" Version="6.2.3" />
+    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
   </ItemGroup>
 
 </Project>

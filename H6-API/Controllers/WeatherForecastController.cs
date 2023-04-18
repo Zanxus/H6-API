@@ -1,33 +1,29 @@
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace H6_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    //[Route("localApi")]
+    [Authorize(LocalApi.PolicyName)]
+    public class DiscoveryDocumentController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        [HttpGet(Name = "GetDiscoveryDocument")]
+        public async Task<IActionResult> Get()
         {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var client = new HttpClient();
+            DiscoveryDocumentResponse disco = await client.GetDiscoveryDocumentAsync("http://localhost:5001");
+            if (disco.IsError)
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                Console.WriteLine(disco.Error);
+                return BadRequest(disco.Json);
+            }
+            return Ok(disco.Json);
         }
     }
 }
