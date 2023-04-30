@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<WatchMateDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("H6_API.Infrastructure")));
+builder.Services.AddDbContext<WatchMateDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("H6-API.Infrastructure")));
 builder.Services.AddControllers();
 
 builder.Services.Configure<OMDBSettings>(builder.Configuration.GetSection("OMDBSettings"));

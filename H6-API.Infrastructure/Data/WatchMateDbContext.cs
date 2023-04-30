@@ -12,14 +12,16 @@ namespace H6_API.Infrastructure.Data
     {
         public WatchMateDbContext(DbContextOptions<WatchMateDbContext> options) : base(options)
         {
-
+            
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
         }
 
     }
