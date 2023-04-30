@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace H6_API.Domain.Interfaces.Repositories
 {
-    public interface IOMDBSearchMediaRepository
+    public interface IOMDBSearchMediaRepository :IRepositoryBase<OMDBSearchMedia>
     {
         Task<List<OMDBSearchMediaResponse>> GetOMDBSearch(string SearchQuery);
     }

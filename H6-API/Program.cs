@@ -1,6 +1,5 @@
 using H6_API.Application.Services;
 using H6_API.ApplicationConfig;
-using H6_API.Domain.DTO;
 using H6_API.Domain.Entites;
 using H6_API.Domain.Interfaces.Repositories;
 using H6_API.Domain.Interfaces.Services;
@@ -9,7 +8,6 @@ using H6_API.Infrastructure.Repositoies;
 using H6_API.Presentation.ApplicationConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,12 +18,20 @@ builder.Services.AddControllers();
 
 builder.Services.Configure<OMDBSettings>(builder.Configuration.GetSection("OMDBSettings"));
 
+
+builder.Services.AddScoped<ITrackedMediaRepository, TrackedMediaRepository>();
+builder.Services.AddScoped<IOMDBSearchMediaRepository, OMDBSearchMediaRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
 builder.Services.AddHttpClient<IOMDBService, OMDBService>(client =>
     client.BaseAddress = new Uri(builder.Configuration["OMDBBaseURL"]
     ));
-
-builder.Services.AddScoped<IOMDBService, OMDBService>();
-
+builder.Services.AddScoped<ITrackedMediaService, TrackedMediaService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

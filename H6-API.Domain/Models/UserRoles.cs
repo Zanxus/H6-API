@@ -1,4 +1,4 @@
-﻿namespace H6_API.ApplicationConfig
+﻿namespace H6_API.Domain.Models
 {
     public static class UserRoles
     {
