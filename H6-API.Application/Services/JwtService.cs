@@ -26,7 +26,6 @@ namespace H6_API.Application.Services
                 _configuration["Jwt:Issuer"],
                 _configuration["Jwt:Audience"],
                 claims,
-                
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
 
