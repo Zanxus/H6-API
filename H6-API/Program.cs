@@ -5,7 +5,6 @@ using H6_API.Domain.Interfaces.Repositories;
 using H6_API.Domain.Interfaces.Services;
 using H6_API.Infrastructure.Data;
 using H6_API.Infrastructure.Repositoies;
-using H6_API.Presentation.ApplicationConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -37,17 +36,10 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
-builder.Services.AddLocalApiAuthentication();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<WatchMateDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddIdentityServer()
-    .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
-    .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
-    .AddInMemoryClients(IdentityServerConfig.Clients)
-    .AddAspNetIdentity<ApplicationUser>()
-    .AddDeveloperSigningCredential();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -92,7 +84,6 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 app.UseRouting();
-app.UseIdentityServer();
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();

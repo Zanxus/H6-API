@@ -1,17 +1,12 @@
-﻿using Duende.IdentityServer.Services;
-using H6_API.Domain.Interfaces.Services;
-using IdentityModel.Client;
+﻿using H6_API.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace H6_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     //[Route("localApi")]
-    [Authorize(LocalApi.PolicyName)]
     public class OMDBController : ControllerBase
     {
         private readonly IOMDBService oMDBService;

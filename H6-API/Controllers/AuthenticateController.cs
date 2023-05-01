@@ -1,14 +1,6 @@
-﻿using Azure;
-using H6_API.Application.Services;
-using H6_API.ApplicationConfig;
-using H6_API.Domain.DTO;
-using H6_API.Domain.Entites;
-using H6_API.Domain.Interfaces.Services;
+﻿using H6_API.Domain.Interfaces.Services;
 using H6_API.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using ClaimTypes = System.Security.Claims.ClaimTypes;
 
 namespace H6_API.Controllers
 {

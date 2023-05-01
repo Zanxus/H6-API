@@ -1,11 +1,6 @@
 ﻿using H6_API.Domain.Interfaces.Repositories;
 using H6_API.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace H6_API.Infrastructure.Repositoies
 {

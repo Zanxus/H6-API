@@ -3,7 +3,6 @@ using H6_API.Domain.Interfaces.Repositories;
 using H6_API.Domain.Interfaces.Services;
 using H6_API.Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -84,7 +83,7 @@ namespace H6_API.Application.Services
 
             var authClaims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.PrimarySid, user.Id),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
@@ -104,7 +103,7 @@ namespace H6_API.Application.Services
 
             var user = new ApplicationUser
             {
-                Email = model.Email,
+                //Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
