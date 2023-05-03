@@ -16,22 +16,20 @@ namespace H6_API.Application.Services
             _configuration = configuration;
         }
 
-        public SecurityToken GenerateJwtToken(IEnumerable<Claim> claims)
+        public JwtSecurityToken GetToken(List<Claim> authClaims)
         {
-            string configKey = _configuration["Jwt:Key"];
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
 
             var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                expires: DateTime.Now.AddHours(3),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
 
             return token;
         }
-
     }
 
 }

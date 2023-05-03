@@ -33,9 +33,25 @@ namespace H6_API.Application.Services
             return await _userManager.AddToRolesAsync(user, roles);
         }
 
-        public async Task<ApplicationUser?> GetUserById(string id)
+        public async Task<ApplicationUser?> GetUser(string id)
         {
             return await _userManager.FindByIdAsync(id);
+        }
+
+        async Task<IdentityResult> IUserService.UpdateUserAsync(ApplicationUser user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
+
+        async Task<IdentityResult> IUserService.DeleteUserAsync(string id)
+        {
+            ApplicationUser usertoDelete = await _userManager.FindByIdAsync(id);
+            return await _userManager.DeleteAsync(usertoDelete);
+        }
+
+        Task<IEnumerable<ApplicationUser>> IUserService.GetAllUsersAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

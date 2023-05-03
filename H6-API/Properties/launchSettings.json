@@ -29,20 +29,24 @@
       }
     },
     "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "publishAllPorts": true,
-      "useSSL": true
-    },
-    "SelfHost": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": ".well-known/openid-configuration",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001"
+        "commandName": "Docker",
+        "launchBrowser": true,
+        "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+        "dockerRunConfiguration": {
+          "ports": [
+            {
+              "hostPort": "80",
+              "containerPort": "80"
+            },
+            {
+              "hostPort": "443",
+              "containerPort": "443"
+            }
+          ],
+          "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Production"
+          }
+        }
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

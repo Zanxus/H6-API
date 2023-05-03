@@ -1,10 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace H6_API.Domain.Interfaces.Services
 {
     public interface IJwtService
     {
-        SecurityToken GenerateJwtToken(IEnumerable<Claim> claims);
+        JwtSecurityToken GetToken(List<Claim> claims);
     }
 }

@@ -32,13 +32,27 @@ namespace H6_API.Application.Services
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                var authClaims = await GetUserClaims(user);
+                var userRoles = await _userManager.GetRolesAsync(user);
 
-                var token = _jwtService.GenerateJwtToken(authClaims);
+                var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.PrimarySid, user.Id),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
 
-                return new JwtSecurityTokenHandler().WriteToken(token);
+                foreach (var userRole in userRoles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }
+
+                var token = _jwtService.GetToken(authClaims);
+
+
+                string stringtoken = new JwtSecurityTokenHandler().WriteToken(token);
+                return stringtoken;
             }
-            throw new UnauthorizedAccessException();
+            return "";
         }
 
         public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
@@ -111,13 +125,19 @@ namespace H6_API.Application.Services
             if (!result.Succeeded)
                 throw new Exception("User creation failed! Please check user details and try again.");
 
-            await _userRepository.AddAsync(user);
+
             if (isAdmin)
             {
+
+                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+
                 await _userManager.AddToRoleAsync(user, UserRoles.Admin);
             }
             else
             {
+                if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
         }

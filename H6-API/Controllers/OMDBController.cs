@@ -1,23 +1,23 @@
 ﻿using H6_API.Domain.Interfaces.Services;
+using H6_API.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace H6_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     //[Route("localApi")]
     public class OMDBController : ControllerBase
     {
         private readonly IOMDBService oMDBService;
-        private readonly ILogger logger;
 
-        public OMDBController(IOMDBService oMDBService, ILogger logger)
+        public OMDBController(IOMDBService oMDBService)
         {
             this.oMDBService = oMDBService;
-            this.logger = logger;
         }
-
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet(Name = "SearchOMDB")]
         public async Task<IActionResult> Get(string search)
         {
@@ -36,7 +36,6 @@ namespace H6_API.Controllers
             catch (Exception ex)
             {
                 // Log error
-                logger.LogError(ex, "Error searching for media.");
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while searching for media.");
             }

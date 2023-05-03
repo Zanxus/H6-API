@@ -9,7 +9,9 @@ namespace H6_API.Domain.Interfaces.Services
         Task<IdentityResult> CreateUserAsync(ApplicationUser user, string password);
         Task<IList<string>> GetUserRolesAsync(ApplicationUser user);
         Task<IdentityResult> AssignUserToRolesAsync(ApplicationUser user, IEnumerable<string> roles);
-        Task<ApplicationUser?> GetUserById(string id);
-
+        Task<ApplicationUser?> GetUser(string id);
+        Task<IdentityResult> UpdateUserAsync(ApplicationUser user);
+        Task<IdentityResult> DeleteUserAsync(string id);
+        Task<IEnumerable<ApplicationUser>> GetAllUsersAsync();
     }
 }

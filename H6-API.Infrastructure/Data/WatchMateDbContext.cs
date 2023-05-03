@@ -20,5 +20,6 @@ namespace H6_API.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        public DbSet<TrackedMedia> TrackedMedia { get; set; }
     }
 }
