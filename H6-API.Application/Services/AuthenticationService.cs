@@ -36,8 +36,8 @@ namespace H6_API.Application.Services
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.PrimarySid, user.Id),
+                    new Claim("UserName", user.UserName),
+                    new Claim("UserId", user.Id),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 

@@ -41,6 +41,43 @@ namespace H6_API.Controllers
             return Ok(trackedMedia);
         }
 
+        [HttpPut("imdb/{imdbId}")]
+        public async Task<IActionResult> Update(TrackedMedia trackedMedia)
+        {
+             _service.Put(trackedMedia);
+
+            if (trackedMedia == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(trackedMedia);
+        }
+
+        [HttpDelete()]
+        public async Task<IActionResult> Delete(TrackedMedia trackedMedia) {
+            if (trackedMedia == null)
+            {
+                return NotFound();
+            }
+            _service.Delete(trackedMedia);
+
+            return Ok();
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            _service.get
+            if (trackedMedia == null)
+            {
+                return NotFound();
+            }
+            _service.Delete(trackedMedia);
+
+            return Ok();
+        }
+
         [HttpGet("state/{state}")]
         public async Task<IActionResult> GetCountByState(string state)
         {

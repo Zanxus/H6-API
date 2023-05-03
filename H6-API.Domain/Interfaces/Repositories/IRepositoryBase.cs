@@ -5,12 +5,12 @@
 
 
         Task<IReadOnlyList<T>> GetAllAsync();
-        Task<T?> GetAsync(Guid id);
+        Task<T?> GetAsync(int id);
 
         Task AddAsync(T entity);
 
         IReadOnlyList<T> GetAll();
-        T? Get(Guid id);
+        T? Get(int id);
 
         void Add(T entity);
         void Update(T entity);
