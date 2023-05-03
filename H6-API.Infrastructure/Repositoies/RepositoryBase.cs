@@ -1,11 +1,6 @@
 ﻿using H6_API.Domain.Interfaces.Repositories;
 using H6_API.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace H6_API.Infrastructure.Repositoies
 {
@@ -30,7 +25,7 @@ namespace H6_API.Infrastructure.Repositoies
         {
             _dbSet.Remove(entity);
         }
-        public T? Get(Guid id)
+        public T? Get(int id)
         {
             return _dbSet.Find(id);
         }
@@ -42,7 +37,7 @@ namespace H6_API.Infrastructure.Repositoies
         {
             return await _dbSet.ToListAsync();
         }
-        public async Task<T?> GetAsync(Guid id)
+        public async Task<T?> GetAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }

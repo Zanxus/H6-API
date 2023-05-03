@@ -7,14 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["H6-API/H6-API.csproj", "H6-API/"]
-RUN dotnet restore "H6-API/H6-API.csproj"
+COPY ["H6-API/H6-API.Presentation.csproj", "H6-API/"]
+RUN dotnet restore "H6-API/H6-API.Presentation.csproj"
 COPY . .
 WORKDIR "/src/H6-API"
-RUN dotnet build "H6-API.csproj" -c Release -o /app/build
+RUN dotnet build "H6-API.Presentation.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "H6-API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "H6-API.Presentation.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
