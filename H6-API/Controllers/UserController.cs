@@ -107,15 +107,7 @@ namespace H6_API.Controllers
 
             return NoContent();
         }
-
-        [HttpGet("/Test")]
-        [Authorize()]
-        public async Task<IActionResult> Test()
-        {
-            return Ok("Sucessful");
-        }
     }
-
     public class CreateUserDto : UserDto
     {
         public string Password { get; set; }

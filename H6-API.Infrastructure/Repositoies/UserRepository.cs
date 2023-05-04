@@ -19,7 +19,7 @@ namespace H6_API.Infrastructure.Repositoies
             return await _dbContext.Users.ToListAsync();
         }
 
-        public async Task<ApplicationUser?> GetAsync(Guid id)
+        public async Task<ApplicationUser?> GetAsync(int id)
         {
             return await _dbContext.Users.FindAsync(id.ToString());
         }
@@ -35,7 +35,7 @@ namespace H6_API.Infrastructure.Repositoies
             return _dbContext.Users.ToList();
         }
 
-        public ApplicationUser? Get(Guid id)
+        public ApplicationUser? Get(int id)
         {
             return _dbContext.Users.Find(id.ToString());
         }

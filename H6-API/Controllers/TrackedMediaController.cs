@@ -68,14 +68,7 @@ namespace H6_API.Controllers
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            _service.get
-            if (trackedMedia == null)
-            {
-                return NotFound();
-            }
-            _service.Delete(trackedMedia);
-
-            return Ok();
+            return Ok(id);
         }
 
         [HttpGet("state/{state}")]
