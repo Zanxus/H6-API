@@ -13,6 +13,16 @@ namespace H6_API.Application.Services
             _unitOfWork = unitOfWork;
         }
 
+        public void Delete(int id)
+        {
+            var enityToDelete = _unitOfWork.TrackedMediaRepository.Get(id);
+            if (enityToDelete != null)
+            {
+                _unitOfWork.TrackedMediaRepository.Delete(enityToDelete);
+                _unitOfWork.SaveChangesAsync();
+            }
+        }
+
         public async Task<IReadOnlyList<TrackedMedia>> GetAllByUserIdAsync(string userId)
         {
             return await _unitOfWork.TrackedMediaRepository.GetAllByUserIdAsync(userId);
@@ -46,6 +56,7 @@ namespace H6_API.Application.Services
         void ITrackedMediaService.Post(TrackedMedia trackedMedia)
         {
              _unitOfWork.TrackedMediaRepository.Add(trackedMedia);
+            _unitOfWork.SaveChangesAsync();
         }
 
         void ITrackedMediaService.Put(TrackedMedia trackedMedia)

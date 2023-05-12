@@ -13,5 +13,6 @@ namespace H6_API.Domain.Interfaces.Services
         void Post(TrackedMedia trackedMedia);
         void Put(TrackedMedia trackedMedia);
         void Delete(TrackedMedia trackedMedia);
+        void Delete(int id);
     }
 }
