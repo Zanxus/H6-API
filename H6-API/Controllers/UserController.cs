@@ -1,6 +1,7 @@
 ﻿using H6_API.Domain.Entites;
 using H6_API.Domain.Interfaces.Services;
 using H6_API.Domain.Models;
+using H6_API.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -89,7 +90,7 @@ namespace H6_API.Controllers
 
             return NoContent();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
@@ -108,16 +109,8 @@ namespace H6_API.Controllers
             return NoContent();
         }
     }
-    public class CreateUserDto : UserDto
-    {
-        public string Password { get; set; }
-    }
 
-    public class UpdateUserDto : CreateUserDto { };
 
-    public class UserDto
-    {
-        public string Id { get; set; }
-        public string UserName { get; set; }
-    }
+
+
 }
